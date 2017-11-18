@@ -12,13 +12,13 @@ namespace CppInvokeSampleApp
 		[DllImport("CppInvokeSampleDLL.dll", CallingConvention = CallingConvention.Winapi)]
 		static extern IntPtr CreateCppSampleInstance();
 
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate void FnDestroy(IntPtr self);
 
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate int FnGetValue(IntPtr self);
 
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate void FnCalc(IntPtr self, int value);
 
 		private IntPtr _self;
