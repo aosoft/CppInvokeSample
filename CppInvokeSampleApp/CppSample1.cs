@@ -13,7 +13,7 @@ namespace CppInvokeSampleApp
 		static extern IntPtr CreateCppSampleInstance();
 
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		delegate void FnDestroy(IntPtr self);
+		delegate void FnAction(IntPtr self);
 
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate int FnGetValue(IntPtr self);
@@ -21,22 +21,29 @@ namespace CppInvokeSampleApp
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate void FnCalc(IntPtr self, int value);
 
+		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+		delegate int FnAppendChars(IntPtr self, byte[] chars, int length);
+
 		private IntPtr _self;
-		private FnDestroy _fnDestroy;
+		private FnAction _fnDestroy;
 		private FnGetValue _fnGetCurrentValue;
 		private FnCalc _fnAdd;
 		private FnCalc _fnSub;
+		private FnAppendChars _fnAppendChars;
+		private FnAction _fnPrintChars;
 
 		public CppSample1()
 		{
 			_self = CreateCppSampleInstance();
-			var funcs = new IntPtr[4];
+			var funcs = new IntPtr[6];
 
 			Marshal.Copy(Marshal.ReadIntPtr(_self, 0), funcs, 0, funcs.Length);
-			_fnDestroy = Marshal.GetDelegateForFunctionPointer<FnDestroy>(funcs[0]);
+			_fnDestroy = Marshal.GetDelegateForFunctionPointer<FnAction>(funcs[0]);
 			_fnGetCurrentValue = Marshal.GetDelegateForFunctionPointer<FnGetValue>(funcs[1]);
 			_fnAdd = Marshal.GetDelegateForFunctionPointer<FnCalc>(funcs[2]);
 			_fnSub = Marshal.GetDelegateForFunctionPointer<FnCalc>(funcs[3]);
+			_fnAppendChars = Marshal.GetDelegateForFunctionPointer<FnAppendChars>(funcs[4]);
+			_fnPrintChars = Marshal.GetDelegateForFunctionPointer<FnAction>(funcs[5]);
 		}
 
 		public void Dispose()
@@ -57,6 +64,17 @@ namespace CppInvokeSampleApp
 		public void Sub(int value)
 		{
 			_fnSub(_self, value);
+		}
+
+		public void AppendChars(string str)
+		{
+			var chars = Encoding.ASCII.GetBytes(str);
+			_fnAppendChars(_self, chars, chars.Length);
+		}
+
+		public void PrintChars()
+		{
+			_fnPrintChars(_self);
 		}
 	}
 }

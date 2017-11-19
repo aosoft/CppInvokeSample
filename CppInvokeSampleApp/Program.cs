@@ -22,8 +22,11 @@ namespace CppInvokeSampleApp
 					cpp.Sub(5);
 					Console.WriteLine(cpp.GetCurrentValue());
 				}
-			}
 
+				cpp.AppendChars("Hello,");
+				cpp.AppendChars("World!");
+				cpp.PrintChars();
+			}
 		}
 	}
 }
