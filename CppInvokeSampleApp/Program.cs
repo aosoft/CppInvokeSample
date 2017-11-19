@@ -10,22 +10,30 @@ namespace CppInvokeSampleApp
 	{
 		static void Main(string[] args)
 		{
-			using (var cpp = new CppSample2())
+			using (var cpp1 = new CppSample1())
+			using (var cpp2 = new CppSample2())
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					cpp.Add(10);
-					Console.WriteLine(cpp.GetCurrentValue());
-				}
-				for (int i = 0; i < 5; i++)
-				{
-					cpp.Sub(5);
-					Console.WriteLine(cpp.GetCurrentValue());
+					cpp1.Add(10);
+					Console.WriteLine(cpp1.GetCurrentValue());
 				}
 
-				Console.WriteLine("Length = {0}", cpp.AppendChars("Hello,"));
-				Console.WriteLine("Length = {0}", cpp.AppendChars("World!"));
-				cpp.PrintChars();
+				Console.WriteLine("Length = {0}", cpp1.AppendChars("Hello,"));
+				Console.WriteLine("Length = {0}", cpp1.AppendChars("CppSample1!"));
+				cpp1.PrintChars();
+
+				Console.WriteLine();
+
+				for (int i = 0; i < 5; i++)
+				{
+					cpp2.Sub(5);
+					Console.WriteLine(cpp2.GetCurrentValue());
+				}
+
+				Console.WriteLine("Length = {0}", cpp2.AppendChars("Hello,"));
+				Console.WriteLine("Length = {0}", cpp2.AppendChars("CppSample2!"));
+				cpp2.PrintChars();
 			}
 		}
 	}
