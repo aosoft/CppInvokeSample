@@ -10,7 +10,7 @@ namespace CppInvokeSampleApp
 	{
 		static void Main(string[] args)
 		{
-			using (var cpp = new CppSample1())
+			using (var cpp = new CppSample2())
 			{
 				for (int i = 0; i < 5; i++)
 				{
@@ -23,8 +23,8 @@ namespace CppInvokeSampleApp
 					Console.WriteLine(cpp.GetCurrentValue());
 				}
 
-				cpp.AppendChars("Hello,");
-				cpp.AppendChars("World!");
+				Console.WriteLine("Length = {0}", cpp.AppendChars("Hello,"));
+				Console.WriteLine("Length = {0}", cpp.AppendChars("World!"));
 				cpp.PrintChars();
 			}
 		}

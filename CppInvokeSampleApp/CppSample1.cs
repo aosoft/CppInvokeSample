@@ -24,13 +24,13 @@ namespace CppInvokeSampleApp
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		delegate int FnAppendChars(IntPtr self, byte[] chars, int length);
 
-		private IntPtr _self;
-		private FnAction _fnDestroy;
-		private FnGetValue _fnGetCurrentValue;
-		private FnCalc _fnAdd;
-		private FnCalc _fnSub;
-		private FnAppendChars _fnAppendChars;
-		private FnAction _fnPrintChars;
+		IntPtr _self;
+		FnAction _fnDestroy;
+		FnGetValue _fnGetCurrentValue;
+		FnCalc _fnAdd;
+		FnCalc _fnSub;
+		FnAppendChars _fnAppendChars;
+		FnAction _fnPrintChars;
 
 		public CppSample1()
 		{
@@ -66,10 +66,10 @@ namespace CppInvokeSampleApp
 			_fnSub(_self, value);
 		}
 
-		public void AppendChars(string str)
+		public int AppendChars(string str)
 		{
 			var chars = Encoding.ASCII.GetBytes(str);
-			_fnAppendChars(_self, chars, chars.Length);
+			return _fnAppendChars(_self, chars, chars.Length);
 		}
 
 		public void PrintChars()
