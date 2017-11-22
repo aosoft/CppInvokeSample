@@ -49,6 +49,8 @@ namespace CppInvokeSampleApp
 		public void Dispose()
 		{
 			_fnDestroy?.Invoke(_self);
+			_fnDestroy = null;
+			_self = IntPtr.Zero;
 		}
 
 		public int GetCurrentValue()
